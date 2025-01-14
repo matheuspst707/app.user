@@ -1,5 +1,6 @@
 package com.sea.sistemy.app.user.security;  
 
+import org.springframework.beans.factory.annotation.Autowired;  
 import org.springframework.context.annotation.Bean;  
 import org.springframework.context.annotation.Configuration;  
 import org.springframework.security.authentication.AuthenticationManager;  
@@ -11,27 +12,32 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;  
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;  
 
+import com.sea.sistemy.app.user.service.UserService;  
+
 @Configuration  
 @EnableWebSecurity  
 public class SecurityConfig extends WebSecurityConfigurerAdapter {  
 
+    @Autowired  
+    private UserService userService;  
+
+    @Autowired  
+    private JwtAuthenticationFilter jwtAuthenticationFilter;  
+
     @Override  
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {  
-        auth.inMemoryAuthentication()  
-            .withUser("user")  
-            .password(passwordEncoder().encode("password"))  
-            .roles("USER");  
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());  
     }  
-    
+
     @Override  
     protected void configure(HttpSecurity http) throws Exception {  
         http  
             .csrf().disable()  
             .authorizeRequests()  
-            .antMatchers("/auth/login").permitAll() // Permita acesso a essa URL  
+            .antMatchers("/auth/login").permitAll() // Permitir acesso a essa URL  
             .anyRequest().authenticated() // Qualquer outra requisição precisa estar autenticada  
             .and()  
-            .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class); // Adiciona o filtro JWT  
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); // Adiciona o filtro JWT  
     }  
 
     @Bean  
@@ -41,12 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }  
 
     @Bean  
-    public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {  
-        return new JwtAuthenticationFilter();  
-    }  
-    
-    @Bean  
     public PasswordEncoder passwordEncoder() {  
         return new BCryptPasswordEncoder();  
     }  
-}
+}  

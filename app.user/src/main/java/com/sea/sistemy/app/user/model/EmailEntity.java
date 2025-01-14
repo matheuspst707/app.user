@@ -37,6 +37,4 @@ public class EmailEntity {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}  
-  
-     
 }

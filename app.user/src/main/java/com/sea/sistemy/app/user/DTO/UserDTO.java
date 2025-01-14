@@ -2,42 +2,41 @@ package com.sea.sistemy.app.user.DTO;
 
 import com.sea.sistemy.app.user.model.User;
 
-public class UserDTO {
-	
-	private Long id;
-	private String Username;
-	
-	public UserDTO() {
-		
-	}
-	
-	public UserDTO(Long id, String Username) {
-		this.id = id;
-		this.Username = Username;
-		}
+public class UserDTO {  
+	  
+	private Long id;  
 
-	public UserDTO(User user) {
-		id = user.getId();
-		Username = user.getUsername();
-		}
+	private String username; // Corrigido para 'username' em minúsculas  
+	  
+	// Construtor padrão  
+	public UserDTO() {}  
 
-	public Long getId() {
-		return id;
-	}
+	// Construtor com parâmetros  
+	public UserDTO(Long id, String username) {  
+		this.id = id;  
+		this.username = username; // Corrigido para 'username' em minúsculas  
+	}  
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+	// Construtor a partir de um objeto User  
+	public UserDTO(User user) {  
+		this.id = user.getId();  
+		this.username = user.getUsername(); // Corrigido para 'username' em minúsculas  
+	}  
 
-	public String getUserName() {
-		return Username;
-	}
+	// Getters e Setters  
+	public Long getId() {  
+		return id;  
+	}  
 
-	public void setName(String Username) {
-		this.Username = Username;
-	}
-	
-	
-	
+	public void setId(Long id) {  
+		this.id = id;  
+	}  
 
+	public String getUsername() { // Corrigido para 'getUsername' em vez de 'getUserName'  
+		return username;  
+	}  
+
+	public void setUsername(String username) { // Corrigido para 'setUsername' em vez de 'setName'  
+		this.username = username;  
+	}  
 }

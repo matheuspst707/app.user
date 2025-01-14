@@ -21,6 +21,5 @@ public class UserController {
 	public UserDTO findById(@PathVariable Long id) {  
 	    User user = service.findById(id); // Obtém o User do serviço  
 	    return new UserDTO(user); // Converte User para UserDTO  
-	}
-      
+	}  
 }

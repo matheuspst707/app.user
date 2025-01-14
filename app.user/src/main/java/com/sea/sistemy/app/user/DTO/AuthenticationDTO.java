@@ -1,6 +1,6 @@
 package com.sea.sistemy.app.user.DTO; 
 
-public class AuthenticationRequest {  
+public class AuthenticationDTO {  
     private String username;  
     private String password;  
 
