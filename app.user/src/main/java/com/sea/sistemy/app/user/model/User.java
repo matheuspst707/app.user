@@ -1,75 +1,77 @@
 package com.sea.sistemy.app.user.model;  
 
 
+import java.util.Collection;
+import java.util.List;
+
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;  
 
-@Entity  
-@Table(name = "tb_users") // Nome da tabela  
-public class User {  
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-    @Id  
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Geração automática do ID  
-    private Long id;  
+import com.sea.sistemy.app.user.DTO.UserRole;
 
-    @NotBlank // O campo não pode estar vazio  
-    private String username;  
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;  
 
-    @NotBlank  
-    private String password;  
+@Table(name = "users")
+@Entity(name = "users")
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(of = "id")
+public class User implements UserDetails {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
+    private String login;
+    private String password;
+    private UserRole role;
 
-    @Enumerated(EnumType.STRING) // Guarda o papel como String  
-    @NotBlank  
-    private Role role; // Usa enum para definir o papel do usuário, "ROLE_USER" ou "ROLE_ADMIN"  
+    public User(String login, String password, UserRole role){
+        this.login = login;
+        this.password = password;
+        this.role = role;
+    }
 
-    public User() {}  
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(this.role == UserRole.ADMIN) 
+        	return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
 
-    public User(Long id, @NotBlank String username, @NotBlank String password, @NotBlank Role role) {  
-        super();  
-        this.id = id;  
-        this.username = username;  
-        this.password = password;  
-        this.role = role;  
-    }  
-		  
-    // Getters e Setters  
-    public Long getId() {  
-        return id;  
-    }  
+    @Override
+    public String getUsername() {
+        return login;
+    }
 
-    public void setId(Long id) {  
-        this.id = id;  
-    }  
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
-    public String getUsername() {  
-        return username;  
-    }  
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
-    public void setUsername(String username) {  
-        this.username = username;  
-    }  
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
 
-    public String getPassword() {  
-        return password;  
-    }  
-
-    public void setPassword(String password) {  
-        this.password = password;  
-    }  
-
-    public Role getRole() { // Alterado para retornar Role  
-        return role;  
-    }  
-
-    public void setRole(Role role) { // Alterado para aceitar Role  
-        this.role = role;  
-    }  
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }    
 
       

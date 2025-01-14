@@ -4,7 +4,7 @@ import com.sea.sistemy.app.user.model.User;
 
 public class UserDTO {  
 	  
-	private Long id;  
+	private String id;  
 
 	private String username; // Corrigido para 'username' em minúsculas  
 	  
@@ -12,7 +12,7 @@ public class UserDTO {
 	public UserDTO() {}  
 
 	// Construtor com parâmetros  
-	public UserDTO(Long id, String username) {  
+	public UserDTO(String id, String username) {  
 		this.id = id;  
 		this.username = username; // Corrigido para 'username' em minúsculas  
 	}  
@@ -24,11 +24,11 @@ public class UserDTO {
 	}  
 
 	// Getters e Setters  
-	public Long getId() {  
+	public String getId() {  
 		return id;  
 	}  
 
-	public void setId(Long id) {  
+	public void setId(String id) {  
 		this.id = id;  
 	}  
 
