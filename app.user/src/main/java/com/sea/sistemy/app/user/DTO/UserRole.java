@@ -1,8 +1,8 @@
 package com.sea.sistemy.app.user.DTO;
 
 public enum UserRole {
-    ADMIN("admin"),
-    USER("user");
+    ADMIN("ADMIN"),
+    USER("USER");
 
     private String role;
 

@@ -1,42 +1,35 @@
 package com.sea.sistemy.app.user.DTO;
 
 import com.sea.sistemy.app.user.model.User;
+import lombok.Data;
 
-public class UserDTO {  
-	  
-	private String id;  
+import javax.validation.constraints.NotBlank;
+import java.util.List;
+import java.util.stream.Collectors;
 
-	private String username; // Corrigido para 'username' em minúsculas  
-	  
-	// Construtor padrão  
-	public UserDTO() {}  
+@Data
+public class UserDTO {
 
-	// Construtor com parâmetros  
-	public UserDTO(String id, String username) {  
-		this.id = id;  
-		this.username = username; // Corrigido para 'username' em minúsculas  
-	}  
+    private String id;
 
-	// Construtor a partir de um objeto User  
-	public UserDTO(User user) {  
-		this.id = user.getId();  
-		this.username = user.getUsername(); // Corrigido para 'username' em minúsculas  
-	}  
+    @NotBlank(message = "Username cannot be blank")
+    private String loguin;
 
-	// Getters e Setters  
-	public String getId() {  
-		return id;  
-	}  
+    public UserDTO() {}
 
-	public void setId(String id) {  
-		this.id = id;  
-	}  
+    public UserDTO(String id, String loguin) {
+        this.id = id;
+        this.loguin = loguin;
+    }
 
-	public String getUsername() { // Corrigido para 'getUsername' em vez de 'getUserName'  
-		return username;  
-	}  
+    public UserDTO(User user) {
+        this.id = user.getId();
+        this.loguin = user.getUsername();
+    }
 
-	public void setUsername(String username) { // Corrigido para 'setUsername' em vez de 'setName'  
-		this.username = username;  
-	}  
+    public static List<UserDTO> fromUsers(List<User> users) {
+        return users.stream()
+                    .map(UserDTO::new)
+                    .collect(Collectors.toList());
+    }
 }

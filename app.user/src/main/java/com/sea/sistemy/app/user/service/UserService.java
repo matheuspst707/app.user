@@ -1,17 +1,15 @@
-package com.sea.sistemy.app.user.service;
+package com.sea.sistemy.app.user.service;  
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import com.sea.sistemy.app.user.model.Role;
-import com.sea.sistemy.app.user.model.User;
-import com.sea.sistemy.app.user.repositories.UserRepository;
+import java.util.List;  
+import org.springframework.beans.factory.annotation.Autowired;  
+import org.springframework.security.core.userdetails.UserDetails;  
+import org.springframework.security.core.userdetails.UserDetailsService;  
+import org.springframework.security.core.userdetails.UsernameNotFoundException;  
+import org.springframework.security.crypto.password.PasswordEncoder;  
+import org.springframework.stereotype.Service;  
+import com.sea.sistemy.app.user.model.Role;  
+import com.sea.sistemy.app.user.model.User;  
+import com.sea.sistemy.app.user.repositories.UserRepository;  
 
 @Service  
 public class UserService implements UserDetailsService {  
@@ -22,13 +20,13 @@ public class UserService implements UserDetailsService {
     @Autowired  
     private PasswordEncoder passwordEncoder;  
 
-    public User registerAdmin(String username, String password) {  
+    public User registerAdmin(String login, String password) {  
         User user = new User();  
-        user.setUsername(username);  
+        user.setLogin(login);  
         user.setPassword(passwordEncoder.encode(password)); // Criptografa a senha  
         user.setRole(Role.ROLE_ADMIN); // Define o papel como admin  
         return userRepository.save(user); // Salva o usuário no banco de dados  
-    } 
+    }   
       
     @Override  
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {  
@@ -42,8 +40,6 @@ public class UserService implements UserDetailsService {
                 .roles(user.getRole().name()) // Converte a role para String  
                 .build();  
     }   
-    
-    
 
     // Método para salvar um usuário  
     public User save(User user) {  
@@ -56,13 +52,17 @@ public class UserService implements UserDetailsService {
     }  
 
     // Método para buscar um usuário pelo ID  
-    public User findById(Long id) {  
+    public User findById(String id) {  
         return userRepository.findById(id).orElse(null); // Retorna null se não encontrar  
     }  
 
-    // Método para encontrar um usuário pelo nome de usuário  
-    public User findByUsername(String username) {  
-        return userRepository.findByUsername(username);  
+    // Método para encontrar um usuário pelo Login  
+    public User findByLogin(String login) {  
+        UserDetails userDetails = userRepository.findByLogin(login);  
+        if (userDetails instanceof User) {  
+            return (User) userDetails; // Casting para User  
+        }  
+        return null;  
     }  
 
     // Método para atualizar um usuário  
@@ -71,7 +71,7 @@ public class UserService implements UserDetailsService {
     }  
 
     // Método para deletar um usuário pelo ID  
-    public void delete(Long id) {  
+    public void delete(String id) {  
         userRepository.deleteById(id);  
     }  
 }

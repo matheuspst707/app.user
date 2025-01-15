@@ -18,7 +18,7 @@ public class UserController {
 	private UserService service;
 	
 	@GetMapping(value = "/{id}")  
-	public UserDTO findById(@PathVariable Long id) {  
+	public UserDTO findById(@PathVariable String id) {  
 	    User user = service.findById(id); // Obtém o User do serviço  
 	    return new UserDTO(user); // Converte User para UserDTO  
 	}  

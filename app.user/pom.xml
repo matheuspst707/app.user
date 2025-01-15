@@ -104,6 +104,20 @@
 		    <artifactId>flyway-core</artifactId>  
 		</dependency>
 		
+		<!-- Dependência Auth0 JWT -->  
+    	<dependency>  
+	        <groupId>com.auth0</groupId>  
+	        <artifactId>java-jwt</artifactId>  
+	        <version>3.18.2</version> <!-- Ou uma versão mais recente -->  
+    	</dependency>
+    	
+    	<!-- MySQL Connector/J -->  
+		<dependency>  
+		    <groupId>mysql</groupId>  
+		    <artifactId>mysql-connector-java</artifactId>  
+		    <version>8.0.29</version> <!-- Verifique se essa é a versão mais recente -->  
+		</dependency>
+		
 	</dependencies>
 
 	<build>

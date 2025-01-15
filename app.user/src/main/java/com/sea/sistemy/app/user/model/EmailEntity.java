@@ -5,9 +5,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-@Entity  
+@Entity
+@Table(name = "tb_EmailEntity")
 public class EmailEntity {  
     
     @Id  
