@@ -108,14 +108,21 @@
     	<dependency>  
 	        <groupId>com.auth0</groupId>  
 	        <artifactId>java-jwt</artifactId>  
-	        <version>3.18.2</version> <!-- Ou uma versão mais recente -->  
+	        <version>3.18.2</version> 
     	</dependency>
     	
     	<!-- MySQL Connector/J -->  
 		<dependency>  
 		    <groupId>mysql</groupId>  
 		    <artifactId>mysql-connector-java</artifactId>  
-		    <version>8.0.29</version> <!-- Verifique se essa é a versão mais recente -->  
+		    <version>8.0.29</version>   
+		</dependency>
+		
+		<!-- Postgree -->
+		<dependency>  
+		    <groupId>org.postgresql</groupId>  
+		    <artifactId>postgresql</artifactId>  
+		    <version>42.6.0</version>   
 		</dependency>
 		
 	</dependencies>
